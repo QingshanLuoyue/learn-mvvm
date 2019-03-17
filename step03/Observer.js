@@ -24,7 +24,7 @@ function observe(obj) {
 }
 // 设置getter、setter
 function defineProperty(obj, key, val) {
-  let dep = new Dep()
+  let dep = new Dep() // 在设置getter、setter，进行数据劫持的时候，添加消息订阅器
   observe(val) // 监听子属性
 
   Object.defineProperty(obj, key, {
@@ -37,12 +37,12 @@ function defineProperty(obj, key, val) {
     set(newVal) {
       console.log('set :', newVal)
       val = newVal
-      dep.notify()
+      dep.notify()  // 数据被改变时，触发setter 在setter中 调用 订阅该属性的消息订阅器的通知函数
     }
   })
 }
 
-// 消息订阅器
+// 消息订阅器 该消息订阅器可以存储多个订阅者
 class Dep {
   constructor() {
     this.subs = []
@@ -52,7 +52,7 @@ class Dep {
   }
   notify() {
     this.subs.forEach(sub => {
-      sub.update()
+      sub.update()  //  消息订阅器的通知函数需要依次调用每个订阅者的更新函数
     })
   }
 }
