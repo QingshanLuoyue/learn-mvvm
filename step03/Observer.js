@@ -35,6 +35,7 @@ function defineProperty(obj, key, val) {
       return val
     },
     set(newVal) {
+      if (val === newVal) return  // 如果值相同，就不进行通知
       console.log('set :', newVal)
       val = newVal
       dep.notify()  // 数据被改变时，触发setter 在setter中 调用 订阅该属性的消息订阅器的通知函数
