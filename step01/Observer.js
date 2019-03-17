@@ -20,8 +20,8 @@ function observe(obj) {
 // 设置getter、setter
 function defineProperty(obj, key, val) {
   Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: false,
+    enumerable: true, // 可以枚举 -- 可以被for in  Object.keys 遍历出来
+    configurable: false,  // 不可再define
     get() {
       console.log('get :', val)
       return val
